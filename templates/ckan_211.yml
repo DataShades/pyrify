@@ -1,0 +1,66 @@
+# This is a YAML configuration file for the pyrify tool.
+# It describes the tables and the columns that should be sanitized.
+
+# You can delete the table from the list to keep it as is.
+# You can delete the column from the list to keep it as is.
+
+# You can use the following commands relative to the table name:
+# - clean: clean the table
+# - drop: drop the table
+
+# You can use different strategies for each column:
+# - nullify: set the column to null
+# - fake_name: set the column to a fake name
+# - fake_email: set the column to a fake email
+# - fake_password: set the column to a fake password
+
+# These tables are needed to be cleaned, either because they are too big or because they contain sensitive data
+activity:
+  clean: true
+activity_detail:
+  clean: true
+api_token:
+  clean: true
+saml2_user:
+  clean: true
+tracking_raw:
+  clean: true
+tracking_summary:
+  clean: true
+
+# These tables are not needed
+group_extra_revision:
+  drop: true
+group_revision:
+  drop: true
+member_revision:
+  drop: true
+package_extra_revision:
+  drop: true
+package_relationship_revision:
+  drop: true
+package_revision:
+  drop: true
+package_tag_revision:
+  drop: true
+resource_revision:
+  drop: true
+revision:
+  drop: true
+system_info_revision:
+  drop: true
+flakes_flake:
+  drop: true
+
+# These tables are needed to be sanitized
+
+user:
+  columns:
+#   - plugin_extras: '~'
+  - last_active: nullify
+  - fullname: fake_fullname
+  - image_url: nullify
+  - email: fake_email
+  - name: fake_username
+  - password: fake_password
+  - about: fake_text

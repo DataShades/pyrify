@@ -1,6 +1,6 @@
 [project]
 name = "pyrify"
-version = "0.0.1"
+version = "0.1.0"
 description = "A CLI tool for database sanitization"
 authors = [
     { name = "DataShades", email = "datashades@linkdigital.com.au"},
@@ -11,6 +11,8 @@ dependencies = [
     "sqlalchemy>=2.0.40,<3.0.0",
     "psycopg2>=2.9.10,<3.0.0",
     "click>=8.1.8,<9.0.0",
+    "PyYAML>=6.0.2,<7.0.0",
+    "Faker>=37.1.0,<38.0.0",
 ]
 
 [project.optional-dependencies]
@@ -26,6 +28,11 @@ pyrify = "pyrify.cli:main"
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.isort]
+known_self = "pyrify"
+sections = "FUTURE,STDLIB,FIRSTPARTY,THIRDPARTY,SELF,LOCALFOLDER"
+profile = "black"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.

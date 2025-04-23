@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/__init__.py
+src/cli.py
+src/commands/__init__.py
+src/commands/init.py
+src/pyrify.egg-info/PKG-INFO
+src/pyrify.egg-info/SOURCES.txt
+src/pyrify.egg-info/dependency_links.txt
+src/pyrify.egg-info/entry_points.txt
+src/pyrify.egg-info/requires.txt
+src/pyrify.egg-info/top_level.txt

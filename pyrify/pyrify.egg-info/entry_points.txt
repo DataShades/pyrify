@@ -1,0 +1,2 @@
+[console_scripts]
+pyrify = src.cli:main

@@ -1,25 +1,23 @@
 import click
 import yaml
 
-import pyrify.utils as utils
+import pyrify.drivers as drivers
 
 
 @click.command()
 @click.option("-d", "--db-url", type=str, required=True)
 def init(db_url: str):
     """Initializes the sanitize configuration"""
-    engine = utils.get_db_engine(db_url)
+    driver = drivers.PostgresDriver(db_url)
 
-    if not engine:
-        raise click.ClickException("Database connection failed")
     database_structure = {}
 
-    for table in utils.get_tables_list(engine):
+    for table in driver.tables:
         database_structure.setdefault(table, {})
 
-        database_structure[table]["columns"] = [
-            {column: "~"} for column in utils.get_table_columns(engine, table)
-        ]
+        database_structure[table]["columns"] = {
+            column: "~" for column in driver.columns[table]
+        }
 
     generate_yaml_config(database_structure)
 
@@ -35,12 +33,18 @@ def get_yaml_usage_comment() -> str:
 # You can use the following commands relative to the table name:
 # - clean: clean the table
 # - drop: drop the table
+#
+# Example that will clean the table activity:
+# activity:
+#   clean: true
 
-# You can use different strategies for each column:
-# - nullify: set the column to null
-# - fake_name: set the column to a fake name
-# - fake_email: set the column to a fake email
-# - fake_password: set the column to a fake password
+# Example that will drop the table revision:
+# revision:
+#   drop: true
+
+
+# You can use different strategies for each column.
+# See the documentation for more information.
 """
 
 

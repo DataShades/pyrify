@@ -1,9 +1,10 @@
 from dataclasses import dataclass, field
+from typing import Any
 
 
 @dataclass
 class TableConfig:
-    columns: list[dict[str, str]] = field(default_factory=list)
+    columns: dict[str, str | dict[str, Any]] = field(default_factory=dict)
     clean: bool = False
     drop: bool = False
 

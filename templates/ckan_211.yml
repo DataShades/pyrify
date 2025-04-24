@@ -5,16 +5,18 @@
 # You can delete the column from the list to keep it as is.
 
 # You can use the following commands relative to the table name:
-# - clean: clean the table
-# - drop: drop the table
+# clean: clean the table
+# drop: drop the table
 
 # You can use different strategies for each column:
-# - nullify: set the column to null
-# - fake_name: set the column to a fake name
-# - fake_email: set the column to a fake email
-# - fake_password: set the column to a fake password
+# nullify: set the column to null
+# fake_name: set the column to a fake name
+# fake_email: set the column to a fake email
+# fake_password: set the column to a fake password
 
-# These tables are needed to be cleaned, either because they are too big or because they contain sensitive data
+# These tables are needed to be cleaned, either because they are too big
+# or because they contain sensitive data.
+# If you don't want to clean them, you can delete the table from the list.
 activity:
   clean: true
 activity_detail:
@@ -28,7 +30,7 @@ tracking_raw:
 tracking_summary:
   clean: true
 
-# These tables are not needed
+# These tables are not needed in CKAN 2.11+ and should be dropped
 group_extra_revision:
   drop: true
 group_revision:
@@ -49,18 +51,21 @@ revision:
   drop: true
 system_info_revision:
   drop: true
-flakes_flake:
-  drop: true
+
 
 # These tables are needed to be sanitized
 
 user:
   columns:
-#   - plugin_extras: '~'
-  - last_active: nullify
-  - fullname: fake_fullname
-  - image_url: nullify
-  - email: fake_email
-  - name: fake_username
-  - password: fake_password
-  - about: fake_text
+    plugin_extras:
+      strategy: jsonb_clean
+      kwargs:
+        columns:
+          test: fake_password
+    last_active: nullify
+    fullname: fake_fullname
+    image_url: nullify
+    email: fake_email
+    name: fake_username
+    password: fake_password
+    about: fake_text

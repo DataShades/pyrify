@@ -1,6 +1,6 @@
 [project]
 name = "pyrify"
-version = "0.1.0"
+version = "0.2.0"
 description = "A CLI tool for database sanitization"
 authors = [
     { name = "DataShades", email = "datashades@linkdigital.com.au"},
@@ -13,6 +13,7 @@ dependencies = [
     "click>=8.1.8,<9.0.0",
     "PyYAML>=6.0.2,<7.0.0",
     "Faker>=37.1.0,<38.0.0",
+    "PyMySQL>=1.1.1,<2.0.0",
 ]
 
 [project.optional-dependencies]

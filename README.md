@@ -8,6 +8,12 @@ A CLI tool for database sanitization
 pip install pyrify
 ```
 
+or use [pipx](https://pipx.pypa.io/stable/) to install the tool globally:
+
+```bash
+pipx install pyrify
+```
+
 ## Initialize the sanitize config
 
 ### Initialize from database

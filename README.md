@@ -29,9 +29,14 @@ pyrify init -d "mysql+pymysql://user:pass@localhost/db_name" > config.yml
 The `init` command will create a config file with the following structure:
 
 ```yaml
+table_name:
+  columns:
+    column_name1: '~'
+    column_name2: '~'
+    column_name3: '~'
 ```
 
-You have to specify the tables and columns that you want to sanitize. If you 
+If you 
 don't need to sanitize a table or a column, you can remove it from the config file.
 
 There are 3 key options:
@@ -69,15 +74,16 @@ user:
 ### Strategies
 
 The following strategies are available:
-    - `fake_username`: This will generate a fake username.
-    - `fake_fullname`: This will generate a fake full name.
-    - `fake_text`: This will generate a fake text.
-    - `fake_email`: This will generate a fake email.
-    - `fake_password`: This will generate a fake password.
-    - `fake_phone_number`: This will generate a fake phone number.
-    - `fake_address`: This will generate a fake address.
-    - `nullify`: This will set the column to `NULL`.
-    - `json_update`: This will update the JSON key with the new value.
+
+- `fake_username`: This will generate a fake username.
+- `fake_fullname`: This will generate a fake full name.
+- `fake_text`: This will generate a fake text.
+- `fake_email`: This will generate a fake email.
+- `fake_password`: This will generate a fake password.
+- `fake_phone_number`: This will generate a fake phone number.
+- `fake_address`: This will generate a fake address.
+- `nullify`: This will set the column to `NULL`.
+- `json_update`: This will update the JSON key with the new value.
 
 ## Sanitize the database
 

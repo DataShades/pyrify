@@ -4,7 +4,7 @@ import click
 import yaml
 
 import pyrify.types as types
-from pyrify.drivers import BaseDriver, MySQLDriver, PostgresDriver
+from pyrify.drivers import BaseDriver, MySQLDriver, PostgresDriver, SQLiteDriver
 from pyrify.strategies import BaseStrategy, get_strategies
 
 
@@ -28,7 +28,7 @@ def load_config(config_path: Path) -> types.SanitizeConfig:
     return sanitize_config
 
 
-def get_strategy(strategy_name: str) -> type[BaseStrategy]:
+def get_strategy(strategy_name: str, engine_name: str) -> type[BaseStrategy]:
     """Get a strategy function by its name
 
     Args:
@@ -37,7 +37,7 @@ def get_strategy(strategy_name: str) -> type[BaseStrategy]:
     Returns:
         A strategy function
     """
-    strategies = get_strategies()
+    strategies = get_strategies(engine_name)
 
     if strategy_name not in strategies:
         raise ValueError(f"Invalid strategy: {strategy_name}")
@@ -58,6 +58,8 @@ def get_driver(db_uri: str) -> BaseDriver:
         return PostgresDriver(db_uri)
     elif db_uri.startswith("mysql"):
         return MySQLDriver(db_uri)
+    elif db_uri.startswith("sqlite"):
+        return SQLiteDriver(db_uri)
     else:
         raise ValueError(f"Unsupported database URI: {db_uri}")
 
@@ -96,6 +98,7 @@ def sanitize_db(driver: BaseDriver, sanitize_config: types.SanitizeConfig) -> No
             if isinstance(strategy, dict):
                 strategy_name = strategy["strategy"]
                 strategy_kwargs = strategy.pop("kwargs", {})
+                strategy_kwargs["engine_name"] = driver.engine.name
             else:
                 strategy_name = strategy
                 strategy_kwargs = {}
@@ -103,6 +106,6 @@ def sanitize_db(driver: BaseDriver, sanitize_config: types.SanitizeConfig) -> No
             driver.update_column(
                 table,
                 column_name,
-                get_strategy(strategy_name),
+                get_strategy(strategy_name, driver.engine.name),
                 **strategy_kwargs,
             )

@@ -24,7 +24,7 @@ class BaseStrategy:
         q = self.kwargs["quote"]
         return [
             sa.text(
-                f'UPDATE {q}{self.table_name}{q} '
+                f"UPDATE {q}{self.table_name}{q} "
                 f"SET {q}{self.column_name}{q} = '{new_value}'"
                 f"WHERE {q}{self.column_name}{q} = '{self.value}'"
             )
@@ -78,21 +78,21 @@ class NullifyStrategy(BaseStrategy):
 
         return [
             sa.text(
-                f'UPDATE {q}{self.table_name}{q} '
-                f'SET {q}{self.column_name}{q} = NULL '
+                f"UPDATE {q}{self.table_name}{q} "
+                f"SET {q}{self.column_name}{q} = NULL "
                 f"WHERE {q}{self.column_name}{q} = '{self.value}'"
             )
         ]
 
 
-class JsonbCleanStrategy(BaseStrategy):
+class JsonCleanStrategy(BaseStrategy):
     def get_statements(self) -> list[sa.TextClause]:
         from pyrify.utils import get_strategy
 
         statements = []
 
         for key, strategy in self.kwargs.get("columns", {}).items():
-            strategy_class = get_strategy(strategy)
+            strategy_class = get_strategy(strategy, self.kwargs["engine_name"])
 
             if not strategy_class:
                 raise ValueError(f"Strategy {strategy} not found")
@@ -102,20 +102,51 @@ class JsonbCleanStrategy(BaseStrategy):
             )
             new_value = strategy_instance.get_value()
 
-            statements.append(
-                sa.text(
-                    f'UPDATE "{self.table_name}" '
-                    f"SET {self.column_name} = jsonb_set({self.column_name}, "
-                    f"'{{\"{key}\"}}', '{json.dumps(new_value)}'::jsonb) "
-                    f"WHERE \"{self.column_name}\" = '{json.dumps(self.value)}'::jsonb"
-                )
-            )
+            statements.append(self.update_json_value(key, new_value))
 
         return statements
 
+    def update_json_value(self, key: str, new_value: Any) -> sa.TextClause:
+        raise NotImplementedError
 
-def get_strategies() -> dict[str, type[BaseStrategy]]:
-    return {
+
+class PostgresJsonCleanStrategy(JsonCleanStrategy):
+    def update_json_value(self, key: str, new_value: Any) -> sa.TextClause:
+        return sa.text(
+            f'UPDATE "{self.table_name}" '
+            f"SET {self.column_name} = jsonb_set({self.column_name}, "
+            f"'{{\"{key}\"}}', '{json.dumps(new_value)}'::jsonb) "
+            f"WHERE \"{self.column_name}\" = '{json.dumps(self.value)}'::jsonb"
+        )
+
+
+class MySQLJsonCleanStrategy(JsonCleanStrategy):
+    def update_json_value(self, key: str, new_value: Any) -> sa.TextClause:
+        json_path = f"$.{key}"
+
+        query = sa.text(
+            f"UPDATE `{self.table_name}` "
+            f"SET `{self.column_name}` = JSON_SET({self.column_name}, "
+            f"'{json_path}', {json.dumps(new_value)}) "
+            f"WHERE JSON_UNQUOTE(JSON_EXTRACT(`{self.column_name}`, '$')) = "
+            f"{json.dumps(self.value)}"
+        )
+
+        return query
+
+
+class SQLiteJsonCleanStrategy(JsonCleanStrategy):
+    def update_json_value(self, key: str, new_value: Any) -> sa.TextClause:
+        return sa.text(
+            f"UPDATE {self.table_name} "
+            f"SET {self.column_name} = json_set("
+            f"{self.column_name}, '$.{key}', '{new_value}') "
+            f"WHERE json({self.column_name}) = json('{self.value}')"
+        )
+
+
+def get_strategies(engine_name: str) -> dict[str, type[BaseStrategy]]:
+    common_strategies = {
         "fake_username": UsernameStrategy,
         "fake_fullname": FullnameStrategy,
         "fake_text": TextStrategy,
@@ -124,5 +155,13 @@ def get_strategies() -> dict[str, type[BaseStrategy]]:
         "fake_phone_number": PhoneNumberStrategy,
         "fake_address": AddressStrategy,
         "nullify": NullifyStrategy,
-        "jsonb_clean": JsonbCleanStrategy,
     }
+
+    if engine_name == "postgresql":
+        common_strategies["json_update"] = PostgresJsonCleanStrategy
+    elif engine_name == "mysql":
+        common_strategies["json_update"] = MySQLJsonCleanStrategy
+    elif engine_name == "sqlite":
+        common_strategies["json_update"] = SQLiteJsonCleanStrategy
+
+    return common_strategies

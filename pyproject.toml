@@ -1,6 +1,6 @@
 [project]
 name = "pyrify"
-version = "0.2.0"
+version = "0.3.0"
 description = "A CLI tool for database sanitization"
 authors = [
     { name = "DataShades", email = "datashades@linkdigital.com.au"},
@@ -18,6 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "python-dotenv>=1.1.0,<2.0.0",
     "pytest>=8.3.5,<9.0.0",
     "ruff>=0.11.2,<1.0.0",
     "ipdb",

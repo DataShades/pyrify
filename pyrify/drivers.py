@@ -40,8 +40,8 @@ class BaseDriver:
 
         try:
             engine.connect()
-        except sa.exc.OperationalError:
-            raise ValueError("Failed to connect to the database")
+        except sa.exc.OperationalError as e:
+            raise ValueError(f"Failed to connect to the database: {e}")
 
         return engine
 
@@ -119,4 +119,34 @@ class MySQLDriver(BaseDriver):
             conn.execute(
                 sa.text(f"TRUNCATE TABLE {self.quote}{table_name}{self.quote}")
             )
+            conn.commit()
+
+
+class SQLiteDriver(MySQLDriver):
+    def __init__(self, db_uri: str):
+        super().__init__(db_uri)
+        self.quote = ""
+
+    def drop_table(self, table_name: str) -> None:
+        """Drop the table
+
+        Note:
+            The syntax for the DROP TABLE statement in SQLite is:
+
+            DROP TABLE [ IF EXISTS ] table_name;
+        """
+        with self.engine.connect() as conn:
+            conn.execute(sa.text(f"DROP TABLE IF EXISTS {table_name}"))
+            conn.commit()
+
+    def clean_table(self, table_name: str) -> None:
+        """Clean the table by deleting all rows
+
+        Note:
+            SQLite does not have an explicit TRUNCATE TABLE command like other
+            databases. To truncate a table in SQLite, you just need to execute
+            a DELETE statement without a WHERE clause.
+        """
+        with self.engine.connect() as conn:
+            conn.execute(sa.text(f"DELETE FROM {table_name}"))
             conn.commit()

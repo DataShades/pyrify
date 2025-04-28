@@ -1,0 +1,383 @@
+
+# This is a YAML configuration file for the pyrify tool.
+# It describes the tables and the columns that should be sanitized.
+
+# You can delete the table from the list to keep it as is.
+# You can delete the column from the list to keep it as is.
+
+# You can use the following commands relative to the table name:
+# - clean: clean the table
+# - drop: drop the table
+#
+# Example that will clean the table activity:
+# activity:
+#   clean: true
+
+# Example that will drop the table revision:
+# revision:
+#   drop: true
+
+
+# You can use different strategies for each column.
+# See the documentation for more information.
+
+activity:
+  columns:
+    activity_type: '~'
+    data: '~'
+    id: '~'
+    object_id: '~'
+    permission_labels: '~'
+    revision_id: '~'
+    timestamp: '~'
+    user_id: '~'
+activity_alembic_version:
+  columns:
+    version_num: '~'
+activity_detail:
+  columns:
+    activity_id: '~'
+    activity_type: '~'
+    data: '~'
+    id: '~'
+    object_id: '~'
+    object_type: '~'
+alembic_version:
+  columns:
+    version_num: '~'
+anzlic_alembic_version:
+  columns:
+    version_num: '~'
+api_token:
+  columns:
+    created_at: '~'
+    id: '~'
+    last_access: '~'
+    name: '~'
+    plugin_extras: '~'
+    user_id: '~'
+cloudstorage_alembic_version:
+  columns:
+    version_num: '~'
+cloudstorage_multipart_part:
+  columns:
+    etag: '~'
+    n: '~'
+    upload_id: '~'
+cloudstorage_multipart_upload:
+  columns:
+    id: '~'
+    initiated: '~'
+    name: '~'
+    original_name: '~'
+    resource_id: '~'
+    size: '~'
+    user_id: '~'
+dashboard:
+  columns:
+    activity_stream_last_viewed: '~'
+    email_last_sent: '~'
+    user_id: '~'
+flakes_alembic_version:
+  columns:
+    version_num: '~'
+googleanalytics_alembic_version:
+  columns:
+    version_num: '~'
+group:
+  columns:
+    approval_status: '~'
+    created: '~'
+    description: '~'
+    id: '~'
+    image_url: '~'
+    is_organization: '~'
+    name: '~'
+    state: '~'
+    title: '~'
+    type: '~'
+group_extra:
+  columns:
+    group_id: '~'
+    id: '~'
+    key: '~'
+    state: '~'
+    value: '~'
+member:
+  columns:
+    capacity: '~'
+    group_id: '~'
+    id: '~'
+    state: '~'
+    table_id: '~'
+    table_name: '~'
+oeh_asset_details:
+  columns:
+    accessibility: '~'
+    accuracy: '~'
+    asset_location: '~'
+    coherence: '~'
+    elements: '~'
+    id: '~'
+    institutional: '~'
+    interpretability: '~'
+    oeh_theme_one: '~'
+    oeh_theme_two: '~'
+    opendata_ready: '~'
+    package_id: '~'
+    security: '~'
+    source_system: '~'
+    storage_format: '~'
+oeh_data_details:
+  columns:
+    comment: '~'
+    data_format: '~'
+    description: '~'
+    details: '~'
+    est_vol: '~'
+    id: '~'
+    location: '~'
+    metadata_type: '~'
+    method: '~'
+    reference: '~'
+    research_project_id: '~'
+    restrictions: '~'
+    title: '~'
+    version: '~'
+oeh_location:
+  columns:
+    approved: '~'
+    data_id: '~'
+    id: '~'
+    location: '~'
+    location_format: '~'
+    type: '~'
+    volume: '~'
+oeh_persons:
+  columns:
+    business_unit: '~'
+    contact: '~'
+    email: '~'
+    id: '~'
+    name: '~'
+    package_id: '~'
+    position: '~'
+    role: '~'
+oeh_research_project:
+  columns:
+    additional_storage_required: '~'
+    additional_storage_space: '~'
+    approval_by: '~'
+    approval_date: '~'
+    approval_title: '~'
+    backup_frequency: '~'
+    backup_location: '~'
+    description: '~'
+    disclosure_justification: '~'
+    edrms: '~'
+    funder: '~'
+    id: '~'
+    name: '~'
+    package_id: '~'
+    privacy: '~'
+    privacy_how: '~'
+    privacy_what: '~'
+    reference: '~'
+    specification_peer: '~'
+    start_date: '~'
+    state: '~'
+    storage_digital: '~'
+    storage_granted: '~'
+    storage_not_oeh: '~'
+package:
+  columns:
+    author: '~'
+    author_email: '~'
+    creator_user_id: '~'
+    id: '~'
+    license_id: '~'
+    maintainer: '~'
+    maintainer_email: '~'
+    metadata_created: '~'
+    metadata_modified: '~'
+    name: '~'
+    notes: '~'
+    owner_org: '~'
+    plugin_data: '~'
+    private: '~'
+    state: '~'
+    title: '~'
+    type: '~'
+    url: '~'
+    version: '~'
+package_extra:
+  columns:
+    id: '~'
+    key: '~'
+    package_id: '~'
+    state: '~'
+    value: '~'
+package_member:
+  columns:
+    capacity: '~'
+    modified: '~'
+    package_id: '~'
+    user_id: '~'
+package_relationship:
+  columns:
+    comment: '~'
+    id: '~'
+    object_package_id: '~'
+    state: '~'
+    subject_package_id: '~'
+    type: '~'
+package_stats:
+  columns:
+    package_id: '~'
+    visits_ever: '~'
+    visits_recently: '~'
+package_tag:
+  columns:
+    id: '~'
+    package_id: '~'
+    state: '~'
+    tag_id: '~'
+resource:
+  columns:
+    cache_last_updated: '~'
+    cache_url: '~'
+    created: '~'
+    description: '~'
+    extras: '~'
+    format: '~'
+    hash: '~'
+    id: '~'
+    last_modified: '~'
+    metadata_modified: '~'
+    mimetype: '~'
+    mimetype_inner: '~'
+    name: '~'
+    package_id: '~'
+    position: '~'
+    resource_type: '~'
+    size: '~'
+    state: '~'
+    url: '~'
+    url_type: '~'
+resource_stats:
+  columns:
+    resource_id: '~'
+    visits_ever: '~'
+    visits_recently: '~'
+resource_view:
+  columns:
+    config: '~'
+    description: '~'
+    id: '~'
+    order: '~'
+    resource_id: '~'
+    title: '~'
+    view_type: '~'
+saml2_user:
+  columns:
+    allow_update: '~'
+    attributes: '~'
+    id: '~'
+    name_id: '~'
+saml_alembic_version:
+  columns:
+    version_num: '~'
+syndicate_alembic_version:
+  columns:
+    version_num: '~'
+syndicate_config:
+  columns:
+    id: '~'
+    predicate: '~'
+    syndicate_api_key: '~'
+    syndicate_author: '~'
+    syndicate_field_id: '~'
+    syndicate_flag: '~'
+    syndicate_organization: '~'
+    syndicate_prefix: '~'
+    syndicate_replicate_organization: '~'
+    syndicate_url: '~'
+system_info:
+  columns:
+    id: '~'
+    key: '~'
+    state: '~'
+    value: '~'
+tag:
+  columns:
+    id: '~'
+    name: '~'
+    vocabulary_id: '~'
+task_status:
+  columns:
+    entity_id: '~'
+    entity_type: '~'
+    error: '~'
+    id: '~'
+    key: '~'
+    last_updated: '~'
+    state: '~'
+    task_type: '~'
+    value: '~'
+term_translation:
+  columns:
+    lang_code: '~'
+    term: '~'
+    term_translation: '~'
+tracking_raw:
+  columns:
+    access_timestamp: '~'
+    tracking_type: '~'
+    url: '~'
+    user_key: '~'
+tracking_summary:
+  columns:
+    count: '~'
+    package_id: '~'
+    recent_views: '~'
+    running_total: '~'
+    tracking_date: '~'
+    tracking_type: '~'
+    url: '~'
+user:
+  columns:
+    about: '~'
+    activity_streams_email_notifications: '~'
+    apikey: '~'
+    created: '~'
+    email: '~'
+    fullname: '~'
+    id: '~'
+    image_url: '~'
+    last_active: '~'
+    name: '~'
+    password: '~'
+    plugin_extras: '~'
+    reset_key: '~'
+    state: '~'
+    sysadmin: '~'
+user_following_dataset:
+  columns:
+    datetime: '~'
+    follower_id: '~'
+    object_id: '~'
+user_following_group:
+  columns:
+    datetime: '~'
+    follower_id: '~'
+    object_id: '~'
+user_following_user:
+  columns:
+    datetime: '~'
+    follower_id: '~'
+    object_id: '~'
+vocabulary:
+  columns:
+    id: '~'
+    name: '~'
+

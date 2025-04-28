@@ -58,7 +58,7 @@ system_info_revision:
 user:
   columns:
     plugin_extras:
-      strategy: jsonb_clean
+      strategy: json_update
       kwargs:
         columns:
           test: fake_password

@@ -1,0 +1,2 @@
+recursive-include pyrify/templates *.yml
+include LICENSE

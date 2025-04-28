@@ -5,14 +5,12 @@
 # You can delete the column from the list to keep it as is.
 
 # You can use the following commands relative to the table name:
-# - clean: clean the table
-# - drop: drop the table
+# clean: clean the table
+# drop: drop the table
 
-# You can use different strategies for each column:
-# - nullify: set the column to null
-# - fake_name: set the column to a fake name
-# - fake_email: set the column to a fake email
-# - fake_password: set the column to a fake password
+# You can use different strategies for each column.
+# See the documentation for more information.
+
 
 
 # These tables are needed to be cleaned

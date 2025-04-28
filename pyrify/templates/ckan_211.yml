@@ -8,11 +8,10 @@
 # clean: clean the table
 # drop: drop the table
 
-# You can use different strategies for each column:
-# nullify: set the column to null
-# fake_name: set the column to a fake name
-# fake_email: set the column to a fake email
-# fake_password: set the column to a fake password
+# You can use different strategies for each column.
+# See the documentation for more information.
+
+
 
 # These tables are needed to be cleaned, either because they are too big
 # or because they contain sensitive data.

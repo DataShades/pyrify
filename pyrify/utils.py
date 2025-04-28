@@ -109,3 +109,37 @@ def sanitize_db(driver: BaseDriver, sanitize_config: types.SanitizeConfig) -> No
                 get_strategy(strategy_name, driver.engine.name),
                 **strategy_kwargs,
             )
+
+
+def get_template(template_name: str) -> str | None:
+    """Get a template for the given template name
+
+    Args:
+        template_name: The name of the template to get
+
+    Returns:
+        A template as a string, or None if template not found
+    """
+    template_path = Path(__file__).parent / "templates" / f"{template_name}.yml"
+
+    if not template_path.exists():
+        return None
+
+    with open(template_path) as f:
+        return f.read()
+
+
+def get_available_templates() -> list[str]:
+    """Get a list of available sanitize config templates
+
+    Returns:
+        A list of available sanitize config templates
+    """
+    template_path = Path(__file__).parent / "templates"
+
+    templates = []
+
+    for template_file in template_path.glob("*.yml"):
+        templates.append(template_file.name.strip(".yml"))
+
+    return templates

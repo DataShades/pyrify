@@ -10,18 +10,34 @@ pip install pyrify
 
 ## Initialize the sanitize config
 
-### Postgres
-
+### Initialize from database
 By providing the database URI, the tool will automatically generate a sanitize config file.
+Currently, the tool supports PostgreSQL, MySQL (with `pymysql`), and SQLite.
+
 
 ```sh
+# PostgreSQL
 pyrify init -d "postgresql://user:pass@localhost/db_name" > config.yml
+
+# MySQL
+pyrify init -d "mysql+pymysql://user:pass@localhost/db_name" > config.yml
+
+# SQLite
+pyrify init -d "sqlite:///db-sanitize.db" > config.yml
 ```
 
-### MySQL
+### Use sanitize config template
+
+You can use a template to generate the sanitize config file.
 
 ```sh
-pyrify init -d "mysql+pymysql://user:pass@localhost/db_name" > config.yml
+pyrify template -t ckan_211 > config.yml
+```
+
+To see the available templates, run:
+
+```sh
+pyrify template
 ```
 
 ## Configure the sanitize config
@@ -36,8 +52,7 @@ table_name:
     column_name3: '~'
 ```
 
-If you 
-don't need to sanitize a table or a column, you can remove it from the config file.
+If you don't need to sanitize a table or a column, you can remove it from the config file.
 
 There are 3 key options:
 
@@ -91,11 +106,8 @@ Below are some examples of how to sanitize the database.
 
 The `-d` option is the database URI and the `-c` option is the path to the sanitize config file.
 
-You can use the template sanitize config files in the `templates` directory or create your own by running the `init` command
-and adjusting the config file.
-
 ```sh
-pyrify sanitize -d "postgresql://root:root@localhost/db_name" -c ./templates/ckan_211.yml
-pyrify sanitize -d "mysql+pymysql://root:root@127.0.0.1:3306/db_name" -c ./templates/drupal_10.yml
+pyrify sanitize -d "postgresql://root:root@localhost/db_name" -c config.yml
+pyrify sanitize -d "mysql+pymysql://root:root@127.0.0.1:3306/db_name" -c config.yml
 ```
 

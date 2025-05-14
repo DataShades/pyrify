@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.1] - 2025-05-14
+
+### 🚀 Features
+
+- Add template command
+
+### 📚 Documentation
+
+- Update documentation
+- Update doc
+- Update readme
+
 ## [0.3.0] - 2025-04-28
 
 ### 🚀 Features

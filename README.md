@@ -37,21 +37,16 @@ pyrify init -d "sqlite:///db-sanitize.db" > config.yml
 Templates are **pre-defined sanitize config** files for common platforms like CKAN, Drupal,
 and more to come.
 
-Currently, the following templates are **available**:
+Check the [templates](./pyrify/templates) directory for the available templates. Or run the following command to see the available templates:
 
-- CKAN 2.11
-- Drupal 10
+```sh
+pyrify template
+```
 
 You can use a template to generate the sanitize config file. 
 
 ```sh
 pyrify template -t ckan_211 > config.yml
-```
-
-To see the available templates, run:
-
-```sh
-pyrify template
 ```
 
 ## Configure the sanitize config

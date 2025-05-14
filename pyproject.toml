@@ -1,6 +1,6 @@
 [project]
 name = "pyrify"
-version = "0.4.0"
+version = "0.4.1"
 readme = "README.md"
 description = "A CLI tool for database sanitization"
 authors = [

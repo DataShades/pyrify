@@ -4,24 +4,54 @@ A CLI tool for database sanitization
 
 ## Installation
 
+### Using pip (recommended for virtual environments)
+
 ```bash
 pip install pyrify
 ```
 
-or use [pipx](https://pipx.pypa.io/stable/) to install the tool globally:
+### Using pipx (recommended for global installation)
+
+[pipx](https://pipx.pypa.io/stable/) allows you to install the tool globally without affecting your system Python:
 
 ```bash
 pipx install pyrify
 ```
 
-## Initialize the sanitize config
+## Quick Start
 
-### Initialize from database
-By providing the database URI, the tool will automatically generate a sanitize config file.
+Here's how to get started with Pyrify in just a few steps:
+
+### Option 1: Using pip in a virtual environment
+
+1. Create and activate a virtual environment
+2. Install Pyrify and generate a configuration file from a template
+3. Sanitize your database
+
+```bash
+pip install pyrify
+pyrify template -t ckan_211 > config.yaml
+pyrify sanitize -d "postgresql://user:pass@localhost/db_name" -c config.yaml
+```
+
+### Option 2: Using pipx (global installation)
+
+If you prefer not to create a virtual environment and want to install the package globally, use pipx:
+
+```bash
+pipx install pyrify
+pyrify template -t ckan_211 > config.yaml
+pyrify sanitize -d "postgresql://user:pass@localhost/db_name" -c config.yaml
+```
+
+## Initialize the Sanitization Config
+
+### Option 1: Initialize from Database
+
+By providing the database URI, the tool will automatically generate a sanitization config file.
 Currently, the tool supports PostgreSQL, MySQL (with `pymysql`), and SQLite.
 
-
-```sh
+```bash
 # PostgreSQL
 pyrify init -d "postgresql://user:pass@localhost/db_name" > config.yml
 
@@ -32,24 +62,23 @@ pyrify init -d "mysql+pymysql://user:pass@localhost/db_name" > config.yml
 pyrify init -d "sqlite:///db-sanitize.db" > config.yml
 ```
 
-### Use sanitize config template
+### Option 2: Use a Sanitization Config Template
 
-Templates are **pre-defined sanitize config** files for common platforms like CKAN, Drupal,
-and more to come.
+Templates are **pre-defined sanitization config** files for common platforms like CKAN, Drupal, and more to come.
 
-Check the [templates](./pyrify/templates) directory for the available templates. Or run the following command to see the available templates:
+Check the [templates](./pyrify/templates) directory for available templates, or run the following command to see all available templates:
 
-```sh
+```bash
 pyrify template
 ```
 
-You can use a template to generate the sanitize config file. 
+You can use a template to generate the sanitization config file:
 
-```sh
+```bash
 pyrify template -t ckan_211 > config.yml
 ```
 
-## Configure the sanitize config
+## Configure the Sanitization Config
 
 The `init` command will create a config file with the following structure:
 
@@ -61,7 +90,7 @@ table_name:
     column_name3: '~'
 ```
 
-If you don't need to sanitize a table or a column, you can remove it from the config file.
+If you don't need to sanitize a table or column, you can remove it from the config file.
 
 There are 3 key options:
 
@@ -95,28 +124,27 @@ user:
 
 ```
 
-### Strategies
+### Available Strategies
 
-The following strategies are available:
+The following sanitization strategies are available:
 
-- `fake_username`: This will generate a fake username.
-- `fake_fullname`: This will generate a fake full name.
-- `fake_text`: This will generate a fake text.
-- `fake_email`: This will generate a fake email.
-- `fake_password`: This will generate a fake password.
-- `fake_phone_number`: This will generate a fake phone number.
-- `fake_address`: This will generate a fake address.
-- `nullify`: This will set the column to `NULL`.
-- `json_update`: This will update the JSON key with the new value.
+- `fake_username`: Generates a fake username.
+- `fake_fullname`: Generates a fake full name.
+- `fake_text`: Generates fake text content.
+- `fake_email`: Generates a fake email address.
+- `fake_password`: Generates a fake password.
+- `fake_phone_number`: Generates a fake phone number.
+- `fake_address`: Generates a fake address.
+- `nullify`: Sets the column value to `NULL`.
+- `json_update`: Updates JSON keys with new values.
 
-## Sanitize the database
+## Sanitize the Database
 
-Below are some examples of how to sanitize the database.
+Below are examples of how to sanitize your database.
 
-The `-d` option is the database URI and the `-c` option is the path to the sanitize config file.
+Use the `-d` option to specify the database URI and the `-c` option for the path to the sanitization config file:
 
-```sh
+```bash
 pyrify sanitize -d "postgresql://root:root@localhost/db_name" -c config.yml
 pyrify sanitize -d "mysql+pymysql://root:root@127.0.0.1:3306/db_name" -c config.yml
 ```
-

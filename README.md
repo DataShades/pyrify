@@ -44,6 +44,10 @@ pyrify template -t ckan_211 > config.yaml
 pyrify sanitize -d "postgresql://user:pass@localhost/db_name" -c config.yaml
 ```
 
+> **Note:** If you're not working with a CKAN database and can't find a suitable config template for your platform, you'll need to generate the configuration file yourself. In this case, refer to [Initialize the Sanitization Config - Option 1](#option-1-initialize-from-database) to automatically generate a config file from your database structure.
+>
+> This file will be your starting point and **must** be customized to fit your specific database schema and sanitization requirements.
+
 ## Initialize the Sanitization Config
 
 ### Option 1: Initialize from Database
